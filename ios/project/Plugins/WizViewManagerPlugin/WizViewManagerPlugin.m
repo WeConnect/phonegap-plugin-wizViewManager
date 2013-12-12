@@ -195,6 +195,9 @@ static WizViewManagerPlugin *wizViewManagerInstance = NULL;
             [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
             return;
         }
+
+        [newWizView setKeyboardDisplayRequiresUserAction:FALSE];
+        
         
         // Add view name to our wizard view list
         [wizViewList setObject:newWizView forKey:viewName];
