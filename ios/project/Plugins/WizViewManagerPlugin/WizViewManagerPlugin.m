@@ -196,9 +196,10 @@ static WizViewManagerPlugin *wizViewManagerInstance = NULL;
             return;
         }
 
-        [newWizView setKeyboardDisplayRequiresUserAction:FALSE];
-        
-        
+        if (![[options objectForKey:@"keyboardDisplayRequiresUserAction"] boolValue]) {
+          [newWizView setKeyboardDisplayRequiresUserAction:FALSE];
+        }
+
         // Add view name to our wizard view list
         [wizViewList setObject:newWizView forKey:viewName];
 
