@@ -22,6 +22,11 @@ static CDVPlugin* viewManager;
 - (void) viewDidLoad
 {
     wizView.delegate = self;
+
+}
+
+- (void)handleRefresh{
+    [self.wizView reload];
 }
 
 - (NSDictionary *)throwError:(int)errorCode description:(NSString *)description {
@@ -41,7 +46,12 @@ static CDVPlugin* viewManager;
     wizView.userInteractionEnabled = YES;
     wizView.opaque = NO;
     wizView.alpha = 0;
-    
+
+    if ([[options objectForKey:@"refresh"] boolValue]){
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+        [wizView.scrollView addSubview:self.refreshControl];
+    }
     // Set scales to fit setting based on Cordova settings.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Cordova" ofType:@"plist"];
     NSMutableDictionary *cordovaConfig = [NSMutableDictionary dictionaryWithContentsOfFile:path];
@@ -173,6 +183,8 @@ static CDVPlugin* viewManager;
 - (void)webViewDidFinishLoad:(UIWebView *)theWebView {
 	// view is loaded
     WizLog(@"[WizWebView] ******* webViewDidFinishLoad" );
+    
+    [self.refreshControl endRefreshing];
 
     // to send data straight to mainView onLoaded via phonegap callback
      

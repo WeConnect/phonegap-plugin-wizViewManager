@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) UIWebView *wizView;
 @property (nonatomic, retain) NSString *viewName;
+@property (nonatomic, retain) UIRefreshControl *refreshControl;
 
 - (UIWebView *)createNewInstanceViewFromManager:(CDVPlugin*)myViewManager newBounds:(CGRect)webViewBounds viewName:(NSString *)name sourceToLoad:(NSString*)src withOptions:(NSDictionary *)options;
 
